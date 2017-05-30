@@ -195,7 +195,7 @@ end
 minetest.register_node("prehistoric_life:triceratops_egg", {
 	description = S("Triceratops Egg"),
 	tiles = {"prehistoric_life_triceratops_egg.png"},
-	inventory_image  = "prehistoric_life_triceratops_egg.png",
+	inventory_image  = "mobs_chicken_egg.png",
 	visual_scale = 0.7,
 	drawtype = "plantlike",
 	wield_image = "mobs_chicken_egg.png",
