@@ -3,24 +3,20 @@ local S = mobs.intllib
 
 
 
-mobs:register_mob("prehistoric_life:allosaurus", {
-	type = "predatory_dinosaur",
+mobs:register_mob("prehistoric_life:triceratops", {
+	type = "herbivorous_dinosaur",
 	passive = false,
-	attack_type = "dogfight",
-	pathfinding = true,
-	reach = 4,
-	damage = 5,
-	hp_min = 78,
-	hp_max = 86,
+	hp_min = 94,
+	hp_max = 112,
 	armor = 100,
-	collisionbox = {-1.25, -1.50, -1.0, 1.0, 0.7, 1.0},
+	collisionbox = {-1, -1, -1, 1.8, 1.7, 1},
 	visual = "mesh",
-	mesh = "prehistoric_life_allosaurus.b3d",
+	mesh = "prehistoric_life_triceratops.b3d",
 	textures = {
-		{"prehistoric_life_allosaurus.png"},
+		{"prehistoric_life_triceratops.png"},
 	},
 	child_texture = {
-		{"prehistoric_life_allosaurus_child.png"},
+		{"prehistoric_life_triceratops_child.png"},
 	},
 	blood_texture = "mobs_blood.png",
 	makes_footstep_sound = true,
@@ -28,33 +24,33 @@ mobs:register_mob("prehistoric_life:allosaurus", {
 		random = "prehistoric_life_dirtmonster",
 	},
 	view_range = 26,
-	walk_velocity = 2,
-	run_velocity = 5,
+	walk_velocity = 1,
+	run_velocity = 3,
 	runaway = false,
 	drops = {
-		{name = "prehistoric_life:allosaurus_raw", chance = 1, min = 2, max = 2},
-		{name = "prehistoric_life:allosaurus_tooth", chance = 3, min = 1, max = 2},
+		{name = "prehistoric_life:triceratops_raw", chance = 1, min = 2, max = 2},
+		{name = "prehistoric_life:triceratops_tooth", chance = 3, min = 1, max = 2},
 	},
-	water_damage = 2,
-	lava_damage = 4,
+	water_damage = 0,
+	lava_damage = 2,
 	light_damage = 0,
-	fall_damage = 7,
+	fall_damage = 6,
 	fear_height = 4,
 	animation = {
 		speed_normal = 15,
-		stand_start = 40,
-		stand_end = 80,
+		stand_start = 50,
+		stand_end = 100,
 		walk_start = 1,
-		walk_end = 30,
+		walk_end = 40,
 		run_start = 1,
-		run_end = 30,
+		run_end = 40,
 	},
 
 	on_rightclick = function(self, clicker)
 		tool = clicker:get_wielded_item()
-		if tool:get_name() == "mobs:meat_raw" then
-			clicker:get_inventory():remove_item("main", "mobs:meat_raw")
-			minetest.add_entity(self.object:getpos(), "prehistoric_life:allosaurus_tamed")
+		if tool:get_name() == "farming:wheat" then
+			clicker:get_inventory():remove_item("main", "farming:wheat")
+			minetest.add_entity(self.object:getpos(), "prehistoric_life:triceratops_tamed")
 			self.object:remove()
 		end
 	end,
@@ -74,7 +70,7 @@ mobs:register_mob("prehistoric_life:allosaurus", {
 
 		local pos = self.object:getpos()
 
-		minetest.add_item(pos, "prehistoric_life:allosaurus_egg")
+		minetest.add_item(pos, "prehistoric_life:triceratops_egg")
 
 		minetest.sound_play("default_place_node_hard", {
 			pos = pos,
@@ -84,14 +80,14 @@ mobs:register_mob("prehistoric_life:allosaurus", {
 	end,
 })
 
-mobs:register_egg("prehistoric_life:allosaurus", S("Allosaurus"), "prehistoric_life_overlay_allosaurus.png", 1)
+mobs:register_egg("prehistoric_life:triceratops", S("Triceratops"), "prehistoric_life_overlay_triceratops.png", 1)
 
 -- egg entity
 
-mobs:register_arrow("prehistoric_life:allosaurus_egg_entity", {
+mobs:register_arrow("prehistoric_life:triceratops_egg_entity", {
 	visual = "sprite",
 	visual_size = {x=.5, y=.5},
-	textures = {"prehistoric_life_allosaurus_egg.png"},
+	textures = {"mobs_chicken_egg.png"},
 	velocity = 6,
 
 	hit_player = function(self, player)
@@ -120,7 +116,7 @@ mobs:register_arrow("prehistoric_life:allosaurus_egg_entity", {
 			return
 		end
 
-		local mob = minetest.add_entity(pos, "prehistoric_life:allosaurus")
+		local mob = minetest.add_entity(pos, "prehistoric_life:triceratops")
 		local ent2 = mob:get_luaentity()
 
 		mob:set_properties({
@@ -166,7 +162,7 @@ local mobs_shoot_egg = function (item, player, pointed_thing)
 		x = playerpos.x,
 		y = playerpos.y +1.5,
 		z = playerpos.z
-	}, "prehistoric_life:allosaurus_egg_entity")
+	}, "prehistoric_life:triceratops_egg_entity")
 
 	local ent = obj:get_luaentity()
 	local dir = player:get_look_dir()
@@ -196,13 +192,13 @@ end
 
 
 -- egg
-minetest.register_node("prehistoric_life:allosaurus_egg", {
-	description = S("Allosaurus Egg"),
-	tiles = {"prehistoric_life_allosaurus_egg.png"},
-	inventory_image  = "prehistoric_life_allosaurus_egg.png",
+minetest.register_node("prehistoric_life:triceratops_egg", {
+	description = S("Triceratops Egg"),
+	tiles = {"prehistoric_life_triceratops_egg.png"},
+	inventory_image  = "prehistoric_life_triceratops_egg.png",
 	visual_scale = 0.7,
 	drawtype = "plantlike",
-	wield_image = "prehistoric_life_allosaurus_egg.png",
+	wield_image = "mobs_chicken_egg.png",
 	paramtype = "light",
 	walkable = false,
 	is_ground_content = true,
@@ -214,35 +210,35 @@ minetest.register_node("prehistoric_life:allosaurus_egg", {
 	groups = {snappy = 2, dig_immediate = 3},
 	after_place_node = function(pos, placer, itemstack)
 		if placer:is_player() then
-			minetest.set_node(pos, {name = "prehistoric_life:allosaurus_egg", param2 = 1})
+			minetest.set_node(pos, {name = "prehistoric_life:triceratops_egg", param2 = 1})
 		end
 	end,
 	on_use = mobs_shoot_egg
 })
 
 -- tooth
-minetest.register_craftitem("prehistoric_life:allosaurus_tooth", {
-	description = ("Allosaurus Tooth"),
-	inventory_image = "prehistoric_life_allosaurus_tooth.png",
+minetest.register_craftitem("prehistoric_life:triceratops_tooth", {
+	description = ("Triceratops Tooth"),
+	inventory_image = "prehistoric_life_triceratops_tooth.png",
 })
 
 -- raw meat
-minetest.register_craftitem("prehistoric_life:raw_allosaurus_meat", {
-	description = ("Raw Allosaurus Meat"),
-	inventory_image = "prehistoric_life_raw_allosaurus_meat.png",
+minetest.register_craftitem("prehistoric_life:raw_triceratops_meat", {
+	description = ("Raw Triceratops Meat"),
+	inventory_image = "prehistoric_life_raw_triceratops_meat.png",
 	on_use = minetest.item_eat(-3),
 })
 
 -- cooked meat
-minetest.register_craftitem("prehistoric_life:cooked_allosaurus_meat", {
-	description = ("Cooked Allosaurus Meat"),
-	inventory_image = "prehistoric_life_cooked_allosaurus_meat.png",
+minetest.register_craftitem("prehistoric_life:cooked_triceratops_meat", {
+	description = ("Cooked Triceratops Meat"),
+	inventory_image = "prehistoric_life_cooked_triceratops_meat.png",
 	on_use = minetest.item_eat(8),
 })
 
 minetest.register_craft({
 	type = "cooking",
-	output = "prehistoric_life:raw_allosaurus_meat",
-	recipe = "prehistoric_life:cooked_allosaurus_meat",
+	output = "prehistoric_life:raw_triceratops_meat",
+	recipe = "prehistoric_life:cooked_triceratops_meat",
 	cooktime = 5,
 })
